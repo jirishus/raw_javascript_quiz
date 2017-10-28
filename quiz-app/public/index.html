@@ -18,28 +18,56 @@
 
 <script>
  var quizForm = document.forms['quiz-form'];
+ var quiz = document.getElementById('quiz');
 
  // consider builder for quizData
  var quizData = [
   { 
-   quesiton: "What the respond code for success", 
+   question: "What the respond code for success", 
    choices: { a:"200", b:"400", c:"500"}, 
    answer: "a"
   },
   { 
-   quesiton: "How do you center text in a div?", 
-   choices: { a:"Text-center", b:"Text-align", c:"Text-justify"}, 
-   answer: "b"
-  },
-  { 
-   quesiton: "What does a 502 mean?", 
+   question: "What does a 502 mean?", 
    choices: { a:"Unavailable", b:"Unauthorized", c:"Bad Gateway"}, 
    answer: "c"
+  },
+  { 
+   question: "How do you center text in a div?", 
+   choices: { a:"Text-center", b:"Text-align", c:"Text-justify"}, 
+   answer: "b"
   }
  ];
 
+ // render quiz as soon as the page loads
+ renderQuiz();
+
+ function renderQuiz() {
+  var viewUpdate = buildView();
+  quiz.innerHTML = viewUpdate;
+ }
+
+ function buildView() {
+   var tempView = [];
+
+   // Array.forEach tends to be slower
+   // than the for() loop used here
+   for (var i=0;i<quizData.length;i++) {
+    var currentQues = quizData[i];
+    var questionPos = i + 1
+
+    tempView.push(
+     `
+     <p>${questionPos} ${currentQues.question}</p>
+     `
+    );
+   }
+  return tempView.join('');
+ }
+
  quizForm.onsubmit = function(evt) {
   evt.preventDefault();
+  console.log('generating results...');
  }
 
 </script>
