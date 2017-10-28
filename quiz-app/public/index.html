@@ -10,6 +10,18 @@
     
 </head>
 <body>
- <p>quiz content</p> 
+ <form name="quiz-form">
+  <div id="quiz"></div>
+
+  <input type="submit" value="See Results" />
+ </form>
+
+<script>
+ var quizForm = document.forms['quiz-form'];
+
+ quizForm.onsubmit = function(evt) {
+  evt.preventDefault();
+ }
+</script>
 </body>
 </html>
