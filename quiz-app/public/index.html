@@ -19,9 +19,29 @@
 <script>
  var quizForm = document.forms['quiz-form'];
 
+ // consider builder for quizData
+ var quizData = [
+  { 
+   quesiton: "What the respond code for success", 
+   choices: { a:"200", b:"400", c:"500"}, 
+   answer: "a"
+  },
+  { 
+   quesiton: "How do you center text in a div?", 
+   choices: { a:"Text-center", b:"Text-align", c:"Text-justify"}, 
+   answer: "b"
+  },
+  { 
+   quesiton: "What does a 502 mean?", 
+   choices: { a:"Unavailable", b:"Unauthorized", c:"Bad Gateway"}, 
+   answer: "c"
+  }
+ ];
+
  quizForm.onsubmit = function(evt) {
   evt.preventDefault();
  }
+
 </script>
 </body>
 </html>
