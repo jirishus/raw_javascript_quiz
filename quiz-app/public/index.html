@@ -70,7 +70,9 @@
      `
      <fieldset>
       <legend>${choicePos} ${currentQues.question}</legend>
-      <p>${choices.join('')}
+      <div class="choices">
+       <p>${choices.join('')}
+      </div>
      </fieldset>     
      `
     );
@@ -81,7 +83,19 @@
 
  quizForm.onsubmit = function(evt) {
   evt.preventDefault();
-  console.log('generating results...');
+  var choiceDivs = quiz.querySelectorAll('.choices');
+  var userChoices = [];
+
+  // gather user choices
+  for (var i=0;i<quizData.length;i++) {
+   const temp = choiceDivs[i];
+   const selector = `input[name=choice${i}]:checked`;      
+   const userChoice = (temp.querySelector(selector) || {}).value;
+    userChoices.push(userChoice);
+  }
+
+  console.log(userChoices);
+
  }
 
 </script>
