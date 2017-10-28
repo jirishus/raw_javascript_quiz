@@ -54,14 +54,28 @@
    // than the for() loop used here
    for (var i=0;i<quizData.length;i++) {
     var currentQues = quizData[i];
-    var questionPos = i + 1
+    var choicePos = i + 1
+    var choices = [];
+
+   for (choice in currentQues.choices) {     
+     choices.push(
+       `<label>
+         <input type="radio" name="choice${i}" value="${choice}" />
+         ${choice} : ${currentQues.choices[choice]}
+       </label>`
+     );
+   }
 
     tempView.push(
      `
-     <p>${questionPos} ${currentQues.question}</p>
+     <fieldset>
+      <legend>${choicePos} ${currentQues.question}</legend>
+      <p>${choices.join('')}
+     </fieldset>     
      `
     );
    }
+
   return tempView.join('');
  }
 
