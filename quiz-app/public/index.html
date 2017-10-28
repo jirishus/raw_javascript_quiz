@@ -16,9 +16,13 @@
   <input type="submit" value="See Results" />
  </form>
 
+ <div id="results">
+ </div>
+
 <script>
  var quizForm = document.forms['quiz-form'];
  var quiz = document.getElementById('quiz');
+ var results = document.getElementById('results');
 
  // consider builder for quizData
  var quizData = [
@@ -91,11 +95,18 @@
    const temp = choiceDivs[i];
    const selector = `input[name=choice${i}]:checked`;      
    const userChoice = (temp.querySelector(selector) || {}).value;
-    userChoices.push(userChoice);
+   const userChoiceText = quizData[i].choices[userChoice];
+   userChoices.push(
+    `
+    <p>
+    ${userChoiceText}
+    </p>
+    `
+   );
   }
 
-  console.log(userChoices);
-
+  results.innerHTML = userChoices.join('');  
+  
  }
 
 </script>
