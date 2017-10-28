@@ -7,11 +7,22 @@
 
 <!-- Mobile-friendly viewport -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
+<style>
+ .slide {
+  display: none;
+ }
+</style>
 </head>
 <body>
  <form name="quiz-form">
   <div id="quiz"></div>
+  
+  <aside>
+   <span class="toggle" onclick="moveSlide(1)">1</span> 
+   <span class="toggle" onclick="moveSlide(2)">2</span> 
+   <span class="toggle" onclick="moveSlide(3)">3</span> 
+  </aside>
 
   <input type="submit" value="See Results" />
  </form>
@@ -23,6 +34,7 @@
  var quizForm = document.forms['quiz-form'];
  var quiz = document.getElementById('quiz');
  var results = document.getElementById('results');
+ var slideIndex = 1;
 
  // consider builder for quizData
  var quizData = [
@@ -45,6 +57,7 @@
 
  // render quiz as soon as the page loads
  renderQuiz();
+ renderSlides();
 
  function renderQuiz() {
   var viewUpdate = buildView();
@@ -72,17 +85,32 @@
 
     tempView.push(
      `
+     <div class="slide">
      <fieldset>
       <legend>${choicePos} ${currentQues.question}</legend>
       <div class="choices">
        <p>${choices.join('')}
       </div>
-     </fieldset>     
+     </fieldset>
+     </div>     
      `
     );
    }
 
   return tempView.join('');
+ }
+
+ function renderSlides() {
+  var slides = document.getElementsByClassName('slide');  
+  for (var i=0;i<slides.length;i++) {
+    slides[i].style.display = 'none';
+  }
+  slides[slideIndex - 1].style.display = "block";   
+ }
+
+ function moveSlide(userSlide) {
+  slideIndex = userSlide;
+  renderSlides();
  }
 
  quizForm.onsubmit = function(evt) {
