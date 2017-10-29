@@ -12,7 +12,7 @@
  .slide {
   display: none;
  }
- .quiz-form {
+ .quiz-form, .results {
   padding: 3em;
   width: 65%;
   margin: 0 auto;
@@ -38,7 +38,7 @@
   background: #333;
   color: #fff;
   cursor: pointer;
- }
+ } 
  fieldset {
   border: 0px;
  }
@@ -47,8 +47,11 @@
   width: 100%;
  }
  .choices {
-  font-size: 1.2em;
- } 
+  font-size: 1.2em;  
+ }
+ .choices label {
+  display: block;
+ }
 </style>
 </head>
 <body>
@@ -64,13 +67,14 @@
   <input type="submit" value="See Results" />
  </form>
 
- <div id="results">
+ <div id="results" class="results">
  </div>
 
 <script>
  var quizForm = document.forms['quiz-form'];
  var quiz = document.getElementById('quiz');
  var results = document.getElementById('results');
+ var retakeBtn = document.getElementById('retake-btn');
  var slideIndex = 1;
 
  // consider builder for quizData
@@ -87,7 +91,7 @@
   },
   { 
    question: "How do you center text in a div?", 
-   choices: { a:"Text-center", b:"Text-align", c:"Text-justify"}, 
+   choices: { a:"Text-center", b:"Text-align", c:"test-justify"}, 
    answer: "b"
   }
  ];
@@ -97,11 +101,11 @@
  renderSlides();
 
  function renderQuiz() {
-  var viewUpdate = buildView();
+  var viewUpdate = buildQuizView();
   quiz.innerHTML = viewUpdate;
  }
 
- function buildView() {
+ function buildQuizView() {
    var tempView = [];
 
    // Array.forEach tends to be slower
@@ -154,6 +158,7 @@
 
  quizForm.onsubmit = function(evt) {
   evt.preventDefault();
+
   var choiceDivs = quiz.querySelectorAll('.choices');
   var userChoices = [];
 
@@ -163,18 +168,36 @@
    const selector = `input[name=choice${i}]:checked`;      
    const userChoice = (temp.querySelector(selector) || {}).value;
    const userChoiceText = quizData[i].choices[userChoice];
+   var relatedQues = quizData[i].question;
+
    userChoices.push(
     `
+    <h2>
+    ${i + 1} ${relatedQues}
+    </h2>
     <p>
     ${userChoiceText}
     </p>
     `
    );
+  
   }
 
-  results.innerHTML = userChoices.join('');  
-  
+  quizForm.style.display = 'none';
+
+  results.innerHTML = '<h1>Quiz Results</h1>' 
+                        + userChoices.join('') 
+                        + '<button id="retake-btn">Retake Quiz</button>'
+
+  document.getElementById('retake-btn').addEventListener('click', retryQuiz);
+
+  function retryQuiz() {
+    quizForm.style.display = 'block';
+  }
+
  }
+
+
 
 </script>
 </body>
