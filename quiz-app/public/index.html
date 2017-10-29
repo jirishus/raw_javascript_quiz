@@ -12,10 +12,47 @@
  .slide {
   display: none;
  }
+ .quiz-form {
+  padding: 3em;
+  width: 65%;
+  margin: 0 auto;
+  text-align: center;
+ }
+ .quiz-form .toggle {
+  background: #eee;
+  display: inline-block;
+  padding: 0.7em 1.1em;
+  margin: 1em 0;
+ }
+ .quiz-form .toggle:hover {
+  background: #ccc;
+  cursor: pointer;
+ }
+ input[type="submit"] {
+  background: #eee;
+  border: 0px;
+  font-size:0.9em;
+  padding: 1.5em 2em;
+ } 
+ input[type="submit"]:hover {
+  background: #333;
+  color: #fff;
+  cursor: pointer;
+ }
+ fieldset {
+  border: 0px;
+ }
+ legend {
+  font-size: 1em;
+  width: 100%;
+ }
+ .choices {
+  font-size: 1.2em;
+ } 
 </style>
 </head>
 <body>
- <form name="quiz-form">
+ <form class="quiz-form" name="quiz-form">
   <div id="quiz"></div>
   
   <aside>
@@ -87,7 +124,9 @@
      `
      <div class="slide">
      <fieldset>
-      <legend>${choicePos} ${currentQues.question}</legend>
+      <legend>
+       <h1>${choicePos} ${currentQues.question}</h1>
+      </legend>
       <div class="choices">
        <p>${choices.join('')}
       </div>
