@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
-<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
+<link href="./stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
 
 <style>
 
@@ -43,7 +43,9 @@
  </div>
 
 <script>
- var quizForm = document.forms['quiz-form'];
+  
+ var app = (function() {
+  var quizForm = document.forms['quiz-form'];
  var quiz = document.getElementById('quiz');
  var results = document.getElementById('results');
  var retakeBtn = document.getElementById('retake-btn');
@@ -192,6 +194,12 @@
   }
 
  }
+
+ return moveSlide;
+ 
+ })();
+
+ window.moveSlide = app;
 
 
 
