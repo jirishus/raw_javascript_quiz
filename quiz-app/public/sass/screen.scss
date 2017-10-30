@@ -1,0 +1,111 @@
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+
+@import "compass/reset";
+
+h1 { font-size: 2em; }
+h2 { font-size: 1.5em; }
+h3 { font-size: 1.17em; }
+h4 { font-size: 1.12em; }
+h5 { font-size: .83em; }
+h6 { font-size: .75em; }
+
+$blue : #3498db;
+$dark-blue : #2980b9;
+
+
+ body {
+  font-family: arial;
+ }
+ .slide {
+  display: none;
+ }
+ .quiz-form, .results, .funnel {
+  padding: 3em 0; 
+  width: 60%;
+  margin: 0 auto;
+  text-align: center;
+ }
+ .quiz-form .toggle {
+  background: #eee;
+  display: inline-block;
+  padding: 0.7em 1.1em;
+  margin: 1em 0;
+ }
+ .quiz-form .toggle:hover {
+  background: #ccc;
+  cursor: pointer;
+ }
+ input[type="submit"], #retake-btn {
+  background: #eee;
+  border: 0px;
+  font-size:0.9em;
+  padding: 1.5em 2em;
+ } 
+ input[type="submit"]:hover, #retake-btn:hover {
+  background: #333;
+  color: #fff;
+  cursor: pointer;
+ } 
+ fieldset {
+  border: 0px;
+ }
+ legend {  
+  width: 100%;
+ }
+ .quiz-form .active-toggle {
+  background: #ccc;
+ }
+ .choices {
+  font-size: 1.2em;  
+ }
+ .choices label {
+  display: block;
+  padding: 10px 10px;
+  text-align: left;
+ }
+ .choices label:hover {
+  background: #eee;
+  cursor: pointer;
+ }
+ .results h2 {
+  font-size: 1em;
+ }
+ .correct {
+  color: #fff;
+  background: green;
+  padding: 10px 0;
+  text-transform: uppercase;
+ }
+ .incorrect {
+  color: #fff;
+  background: red;
+  padding: 10px 0;
+  text-transform: uppercase;
+ }
+ .user-response {
+  background: #eee;
+  font-size: 1em;
+  padding: 10px 0;
+  margin: 0;
+ }
+ .funnel {
+  h2 {
+   padding: 20px 0;
+  }
+ }
+ .funnel a {
+  display: inline-block;
+  color: #fff;
+  padding: 50px 0;
+  background: $blue;
+  float: left;
+  font-size: 1.5em;
+  text-decoration: none;
+  width: 100%;
+ }
+ .funnel a:hover {
+  background: $dark-blue;
+ }
