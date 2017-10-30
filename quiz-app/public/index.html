@@ -7,13 +7,16 @@
 
 <!-- Mobile-friendly viewport -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 <style>
+ body {
+  font-family: arial;
+ }
  .slide {
   display: none;
  }
- .quiz-form, .results {
-  padding: 3em;
+ .quiz-form, .results, .funnel {
+  padding: 6em 0; 
   width: 60%;
   margin: 0 auto;
   text-align: center;
@@ -60,23 +63,58 @@
   background: #eee;
   cursor: pointer;
  }
+ .results h2 {
+  font-size: 1em;
+ }
  .correct {
+  color: #fff;
   background: green;
   padding: 10px 0;
   text-transform: uppercase;
  }
  .incorrect {
+  color: #fff;
   background: red;
   padding: 10px 0;
   text-transform: uppercase;
  }
+ .user-response {
+  background: #eee;
+  font-size: 1em;
+  padding: 10px 0;
+  margin: 0;
+ }
+ .funnel a {
+  display: inline-block;
+  color: #fff;
+  padding: 50px 0;
+  background: #3498db;
+  float: left;
+  font-size: 1.5em;
+  text-decoration: none;
+  width: 33.3%;
+ }
+ .funnel a:hover {
+  background: #2980b9;
+ }
 </style>
 </head>
 <body>
+
+<div class="funnel">
+  <h1><i class="fa fa-cogs"></i> Front-End Engineering Prep</h1>
+  <h2>What do you want to learn?</h2>
+  <aside id="funnel-handle">
+    <a href="#" class="html"><i class="fa fa-html5"></i> HTML5 </a>
+    <a href="#" class="css"><i class="fa fa-css3"></i>CSS3 </a>
+    <a href="#" class="javascript"><i class="fa fa-file"></i> EcmaScript6 </a>
+  </aside>
+</div>
+
  <form class="quiz-form" name="quiz-form">
   <div id="quiz"></div>
   
-  <aside id="toggle-handle">
+  <aside>
    <span class="toggle" onclick="moveSlide(1)">1</span> 
    <span class="toggle" onclick="moveSlide(2)">2</span> 
    <span class="toggle" onclick="moveSlide(3)">3</span> 
@@ -93,7 +131,8 @@
  var quiz = document.getElementById('quiz');
  var results = document.getElementById('results');
  var retakeBtn = document.getElementById('retake-btn');
- var toggleHandle = document.getElementById('toggle-handle');
+ var funnelHandle = document.getElementById('funnel-handle');
+ var funnel = document.querySelector('.funnel');
  var slideIndex = 1;
 
  // consider builder for quizData
@@ -115,9 +154,19 @@
   }
  ];
 
+ funnelHandle.addEventListener('click', function(evt) {
+  evt.preventDefault();
+
+
+  funnel.style.display = 'none';
+  quizForm.style.display = 'block';
+ });
+
  // render quiz as soon as the page loads
  renderQuiz();
  renderSlides(1);
+
+ quizForm.style.display = 'none';
 
  function renderQuiz() {
   var viewUpdate = buildQuizView();
@@ -193,16 +242,16 @@
    var relatedQues = quizData[i].question;
    var correctChoice = quizData[i].answer;
    var result = (userChoice === correctChoice) 
-                ? '<div class="correct">Correct</div>' 
-                : '<div class="incorrect">Incorrect</div>';
+        ? '<div class="correct">Correct</div>' 
+        : '<div class="incorrect">Incorrect</div>';
 
    userChoices.push(
     `
     <h2>
     ${i + 1} ${relatedQues}
     </h2>
-    <p>
-    ${userChoiceText}
+    <p class="user-response">
+    Response: ${userChoiceText}
     ${result}
     </p>
     `
@@ -219,11 +268,11 @@
 
   document.getElementById('retake-btn').addEventListener('click', retryQuiz);
 
-  function retryQuiz() {    
-    renderSlides(1);
-    quizForm.reset();
-    quizForm.style.display = 'block';
+  function retryQuiz() {
+    renderSlides(1);    
+    quizForm.reset();    
     results.style.display = 'none';
+    funnel.style.display = 'block';
   }
 
  }
