@@ -28,13 +28,13 @@
   background: #ccc;
   cursor: pointer;
  }
- input[type="submit"] {
+ input[type="submit"], #retake-btn {
   background: #eee;
   border: 0px;
   font-size:0.9em;
   padding: 1.5em 2em;
  } 
- input[type="submit"]:hover {
+ input[type="submit"]:hover, #retake-btn:hover {
   background: #333;
   color: #fff;
   cursor: pointer;
@@ -51,6 +51,12 @@
  }
  .choices label {
   display: block;
+  padding: 10px 10px;
+  text-align: left;
+ }
+ .choices label:hover {
+  background: #eee;
+  cursor: pointer;
  }
 </style>
 </head>
@@ -58,7 +64,7 @@
  <form class="quiz-form" name="quiz-form">
   <div id="quiz"></div>
   
-  <aside>
+  <aside id="toggle-handle">
    <span class="toggle" onclick="moveSlide(1)">1</span> 
    <span class="toggle" onclick="moveSlide(2)">2</span> 
    <span class="toggle" onclick="moveSlide(3)">3</span> 
@@ -75,30 +81,31 @@
  var quiz = document.getElementById('quiz');
  var results = document.getElementById('results');
  var retakeBtn = document.getElementById('retake-btn');
+ var toggleHandle = document.getElementById('toggle-handle');
  var slideIndex = 1;
 
  // consider builder for quizData
  var quizData = [
   { 
-   question: "What the respond code for success", 
-   choices: { a:"200", b:"400", c:"500"}, 
+   question: "What is the physical component where data is stored in a HDD", 
+   choices: { a:"Platter", b:"Cluster", c:"Read/write head"}, 
    answer: "a"
   },
   { 
-   question: "What does a 502 mean?", 
-   choices: { a:"Unavailable", b:"Unauthorized", c:"Bad Gateway"}, 
-   answer: "c"
+   question: "Which pair represents the flow of power supplies and AC adapters?", 
+   choices: { a:"DC in, AC out", b:"AC in, DC out", c:"AC in, AC out"}, 
+   answer: "b"
   },
   { 
-   question: "How do you center text in a div?", 
-   choices: { a:"Text-center", b:"Text-align", c:"test-justify"}, 
-   answer: "b"
+   question: "What tends to vary among power supplies?", 
+   choices: { a:"Amperage", b:"Voltage", c:"Wattage"}, 
+   answer: "c"
   }
  ];
 
  // render quiz as soon as the page loads
  renderQuiz();
- renderSlides();
+ renderSlides(1);
 
  function renderQuiz() {
   var viewUpdate = buildQuizView();
@@ -143,18 +150,26 @@
   return tempView.join('');
  }
 
- function renderSlides() {
+ function renderSlides(index) {
   var slides = document.getElementsByClassName('slide');  
   for (var i=0;i<slides.length;i++) {
     slides[i].style.display = 'none';
   }
-  slides[slideIndex - 1].style.display = "block";   
+
+  console.log('input INDEX ', index);
+
+  slides[index - 1].style.display = "block";   
  }
 
- function moveSlide(userSlide) {
+ function moveSlide(userSlide) {  
   slideIndex = userSlide;
-  renderSlides();
+  renderSlides(userSlide);
  }
+
+ toggleHandle.addEventListener('click', function(evt) {  
+  //evt.target.className += ' active'; 
+  console.log(evt.target);
+ });
 
  quizForm.onsubmit = function(evt) {
   evt.preventDefault();
@@ -184,6 +199,7 @@
   }
 
   quizForm.style.display = 'none';
+  results.style.display = 'block';
 
   results.innerHTML = '<h1>Quiz Results</h1>' 
                         + userChoices.join('') 
@@ -191,8 +207,11 @@
 
   document.getElementById('retake-btn').addEventListener('click', retryQuiz);
 
-  function retryQuiz() {
+  function retryQuiz() {    
+    renderSlides(1);
+    quizForm.reset();
     quizForm.style.display = 'block';
+    results.style.display = 'none';
   }
 
  }
